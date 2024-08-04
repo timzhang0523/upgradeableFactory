@@ -13,12 +13,12 @@ contract ERC20TokenTest is Test {
     Account public owner = makeAccount("owner");
     Account public newOwner = makeAccount("newOwner");
     Account public user = makeAccount("user");
-    string public symbol = "ETK";
+    string public symbol = "ZLL";
     uint public totalSupply = 100_000_000e18;
     uint public perMint = 10e18;
 
     function setUp() public {
-        // 部署实现
+        
         ERC20Token implementation = new ERC20Token();
         // Deploy the proxy and initialize the contract through the proxy
         proxy = new ERC1967Proxy(
@@ -28,7 +28,7 @@ contract ERC20TokenTest is Test {
                 (owner.addr, symbol, totalSupply, perMint)
             )
         );
-        // 用代理关联 MyToken 接口
+        // 
         myToken = ERC20Token(address(proxy));
         // Emit the owner address for debugging purposes
         emit log_address(owner.addr);
@@ -40,7 +40,7 @@ contract ERC20TokenTest is Test {
         vm.prank(owner.addr);
         // Mint tokens to address(2) and assert the balance
         myToken.mint(user.addr);
-        assertEq(myToken.balanceOf(user.addr), 10 ether);
+        assertEq(myToken.balanceOf(user.addr), 10e18);
     }
 }
 

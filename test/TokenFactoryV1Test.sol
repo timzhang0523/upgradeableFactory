@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 import {ERC20Token} from "../src/ERC20Token.sol";
-import {TokenFactoryV1} from "../src/FactoryV1.sol";
-import {TokenFactoryV2} from "../src/FactoryV2.sol";
+import {TokenFactoryV1} from "../src/TokenFactoryV1.sol";
+import {TokenFactoryV2} from "../src/TokenFactoryV2.sol";
 
 contract TokenFactoryV1Test is Test {
     TokenFactoryV1 public factoryv1;
@@ -23,7 +23,7 @@ contract TokenFactoryV1Test is Test {
     string public symbol = "ZLL";
     uint public totalSupply = 100_000_000e18;
     uint public perMint = 10e18;
-    uint public price = 10 ** 16; // 0.01 ETH in wei
+    uint public price = 10 ** 16; // 0.01 ETH 
 
     function setUp() public {
         myToken = new ERC20Token();
@@ -96,8 +96,8 @@ contract TokenFactoryV1Test is Test {
         deployedToken = ERC20Token(deployedTokenAddress);
         vm.startPrank(user.addr);
         factoryv1.mintInscription(deployedTokenAddress);
-        assertEq(deployedToken.balanceOf(user.addr), 10 ether);
-        assertEq(deployedToken.totalSupply(), 10 ether);
+        assertEq(deployedToken.balanceOf(user.addr), 10e18);
+        assertEq(deployedToken.totalSupply(), 10e18);
         assertEq(deployedToken.totalSupplyToken(), totalSupply);
         vm.stopPrank();
     }
@@ -116,10 +116,10 @@ contract TokenFactoryV1Test is Test {
         factoryv1.mintInscription(deployedTokenAddress);
         assertEq(
             ERC20Token(deployedTokenAddress).balanceOf(user.addr),
-            10 ether
+            10e18
         );
-        assertEq(deployedToken.balanceOf(user.addr), 10 ether);
-        assertEq(deployedToken.totalSupply(), 10 ether);
+        assertEq(deployedToken.balanceOf(user.addr), 10e18);
+        assertEq(deployedToken.totalSupply(), 10e18);
         assertEq(deployedToken.totalSupplyToken(), totalSupply);
         vm.stopPrank();
     }
@@ -227,7 +227,7 @@ contract TokenFactoryV1Test is Test {
         assertEq(factoryv2.tokenPrices(deployedTokenAddress2), price);
         assertEq(factoryv2.tokenperMint(deployedTokenAddress2), perMint);
 
-        assertEq(deployedToken.balanceOf(user.addr), 10 ether);
+        assertEq(deployedToken.balanceOf(user.addr), 10e18);
         assertEq(deployedToken.totalSupply(), perMint);
         assertEq(deployedToken.totalSupplyToken(), totalSupply);
         vm.stopPrank();

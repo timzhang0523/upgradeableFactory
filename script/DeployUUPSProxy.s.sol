@@ -4,7 +4,7 @@ pragma solidity ^0.8.19;
 import "../src/ERC20Token.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import "forge-std/Script.sol";
-import {TokenFactoryV1} from "../src/FactoryV1.sol";
+import {TokenFactoryV1} from "../src/TokenFactoryV1.sol";
 
 contract DeployUUPSProxy is Script {
     function setUp() public {}

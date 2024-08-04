@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import "./ERC20Token.sol";
 
 /// @custom:oz-upgrades-from TokenFactoryV1
-contract FactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract TokenFactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     ERC20Token myToken;
     address[] public deployedTokens;
     mapping(address => uint) public tokenPrices;
@@ -49,11 +49,11 @@ contract FactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     ) internal override onlyOwner {}
 
     /**
-     * 部署新的 ERC20 代币合约
-     * @param symbol symbol 表示 Token 的名称
-     * @param totalSupply totalSupply 表示可发行的数量
-     * @param perMint perMint 用来控制每次发行的数量，用于控制mintInscription函数每次发行的数量
-     * @param price 每个代币的价格 price 表示发行每个 token 需要支付的费用
+     *  deploy new ERC20 Token
+     * @param symbol symbol 
+     * @param totalSupply totalSupply 
+     * @param perMint perMint 
+     * @param price price for per deployedTokens
      */
     function deployInscription(
         string memory symbol,
@@ -72,7 +72,7 @@ contract FactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         );
 
         console.log("deployInscription  msg.sender, address:", msg.sender);
-        // 使用 Clones 库创建最小代理合约实例
+
         address newToken = Clones.clone(address(myToken));
 
         ERC20Token(newToken).initialize(
@@ -90,8 +90,8 @@ contract FactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     }
 
     /**
-     * 铸造 ERC20 代币
-     * @param tokenAddr 代币地址
+     *  mint ERC20 token by ether
+     * @param tokenAddr token address for erc20
      */
     function mintInscription(address tokenAddr) public payable {
         ERC20Token token = ERC20Token(tokenAddr);
@@ -100,16 +100,14 @@ contract FactoryV2 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         address userAddr = tokenDeployUser[tokenAddr];
         require(msg.value >= (price * perMint), "Incorrect payment");
         token.mint(msg.sender);
-        // 使用 call 方法转账，以避免 gas 限制问题 payable(userAddr).transfer(msg.value);
+        // use call transfer eth,gas limit, payable(userAddr).transfer(msg.value);
         (bool success, ) = userAddr.call{value: msg.value}("");
         require(success, "Transfer failed.");
 
         emit mintInscriptionEvent(tokenAddr, userAddr, msg.value);
     }
 
-    /**
-     * 提取合约余额
-     */
+ 
     function withdraw() external onlyOwner {
         uint balance = address(this).balance;
         require(balance > 0, "No funds to withdraw");

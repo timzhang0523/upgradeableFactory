@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
 import "./ERC20Token.sol";
 
-contract FactoryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+contract TokenFactoryV1 is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     ERC20Token myToken;
     address[] public deployedTokens;
 

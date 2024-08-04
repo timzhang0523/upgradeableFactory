@@ -4,11 +4,11 @@ pragma solidity ^0.8.20;
 import {Script, console} from "forge-std/Script.sol";
 import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 
-import {TokenFactoryV2} from "../src/FactoryV2.sol";
+import {TokenFactoryV2} from "../src/TokenFactoryV2.sol";
 
 contract TokenFactoryV2Script is Script {
-    address public proxy = 0x90635Ff2Ff7E64872848612ad6B943b04B089Db0;
-    address public erc20Token = 0x65869BaA9336F8968704F2dd60C40959a7bD202b;
+    address public proxy = 0xF420C0c9DC55505EED6cA62d2222992859Dc7227;
+    address public erc20Token = 0x7b1Ac9ebB14B7Ac4C8B21824629c6d31F555EE84;
 
     function setUp() public {}
 
